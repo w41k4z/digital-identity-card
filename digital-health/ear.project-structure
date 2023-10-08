@@ -1,0 +1,17 @@
+MyEARProject/
+├── src/
+│   ├── META-INF/
+│   │   └── application.xml
+│   └── your-application-modules/  (EJBs, WARs, JARs, etc.)
+|        ├── ex: YourEjbModule.jar
+|        └── ex: YourWebModule/
+|                 ├── WEB-INF/
+|                 |      ├── web.xml
+|                 |      └── lib/  (if you have any web-specific JARs)
+|                 ├── index.jsp
+|                 ├── servlets/
+|                 │   ├── MyServlet.java
+|                 └── ... (other web resources)
+├── build.xml
+├── lib/  (for any shared libraries)
+└── dist/  (where the EAR file will be generated)

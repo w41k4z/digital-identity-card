@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="digital-health" basedir=".">
+    
+    <!-- PROPERTIES -->
+    <property name="app.name" value="digital-health"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="dist.dir" value="${basedir}/dist"/>
+
+
+    <!-- PATHS -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar" />
+    </path>
+    
+    <!-- TARGETS -->
+    <!-- Initialize target: Create necessary directories -->
+    <target name="init">
+        <mkdir dir="${build.dir}/${app.name}/lib"/>
+    </target>
+    <!-- Generate and copy application.xml -->
+    <target name="generate-application-xml">
+        <!-- Define the content of application.xml -->
+        <property name="application-xml-content"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
+                version="6">
+    <display-name>${app.name}</display-name>
+    <!-- Define your modules here -->
+    <module>
+        <ejb>ejb-module.jar</ejb>
+    </module>
+    <module>
+        <web>
+            <web-uri>web-module.war</web-uri>
+            <context-root>/${app.name}</context-root>
+        </web>
+    </module>
+</application>
+]]>
+        </property>
+
+        <!-- Create the application.xml file and copy it to META-INF -->
+        <echo file="${build.dir}/${app.name}/META-INF/application.xml">${application-xml-content}</echo>
+        <echo message="Generated application.xml" />
+    </target>
+    <!-- Clean target: Deletes generated files -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+    <!-- Build target: Build the ear -->
+    <target name="build" depends="init">
+        <!-- EJB module building -->
+        <mkdir dir="ejb"/>
+        <javac includeantruntime="false" srcdir="${src.dir}/modules/ejb" destdir="ejb" classpathref="classpath"/>
+        <jar jarfile="${build.dir}/${app.name}/ejb-module.jar" basedir="ejb" />
+        <delete dir="ejb"/>
+
+        <!-- Web module building -->
+        <mkdir dir="webapp/jsp"/>
+        <mkdir dir="webapp/WEB-INF/lib"/>
+        <copy todir="webapp/WEB-INF/lib">
+            <fileset dir="${lib.dir}" includes="*.jar" />
+        </copy>
+        <mkdir dir="webapp/WEB-INF/classes"/>
+        <javac includeantruntime="false" srcdir="${src.dir}/modules/web" destdir="webapp/WEB-INF/classes" classpathref="classpath"/>
+        <war destfile="${build.dir}/${app.name}/web-module.war" webxml="${src.dir}/modules/web/web.xml">
+            <fileset dir="webapp" includes="**/*" />
+        </war>
+        <delete dir="webapp"/>
+
+        <!-- EAR file generating -->
+        <copy todir="${build.dir}/${app.name}/lib">
+            <fileset dir="${lib.dir}" includes="*.jar" />
+        </copy>
+    </target>
+    <!-- Deploy target: deploy the project to glassfish -->
+    <target name="deploy" depends="build, generate-application-xml">
+        <ear destfile="${dist.dir}/${app.name}.ear" appxml="${build.dir}/${app.name}/META-INF/application.xml">
+            <metainf dir="${build.dir}/${app.name}/META-INF" />
+            <fileset dir="${build.dir}/${app.name}" includes="**/*" />
+        </ear>
+        <exec executable="asadmin">
+            <arg value="deploy" />
+            <arg value="${dist.dir}/${app.name}.ear" />
+        </exec>
+    </target>
+    <!-- Undeploy target: undeploy the existing ear -->
+    <target name="undeploy">
+        <exec executable="asadmin">
+            <arg value="undeploy" />
+            <arg value="${dist.dir}/${app.name}" />
+        </exec>
+    </target>
+    <target name="redeploy" depends="clean, undeploy, deploy"/>
+</project>

@@ -1,0 +1,7 @@
+{
+  "java.project.sourcePaths": ["src/modules/ejb", "src/modules/web"],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ]
+}
