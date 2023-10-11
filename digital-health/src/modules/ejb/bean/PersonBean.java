@@ -17,11 +17,22 @@ import service.PersonService;
 @Remote
 @Stateless
 public class PersonBean implements PersonService {
+    /* FIELD */
+    private Person person;
 
-    /* OVERRIDES */
+    /* CONSTRUCTOR */
+    public PersonBean() throws Exception {
+        this.person = new Person();
+    }
+
+    @Override
+    public boolean exists(String ID) throws Exception {
+        return false;
+    }
+
     @Override
     public Map<String, Object> fetchByID(String ID) throws Exception {
-        Person person = new Person().findByPrimaryKey(new DBAccess(), ID);
+        Person person = this.person.findByPrimaryKey(new DBAccess(), ID);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("nic", person.getNationalIdentityCard());
         map.put("name", person.getName());
@@ -33,7 +44,7 @@ public class PersonBean implements PersonService {
 
     @Override
     public List<Map<String, Object>> fetch() throws Exception {
-        Person[] persons = new Person().findAll(new DBAccess());
+        Person[] persons = this.person.findAll(new DBAccess());
         List<Map<String, Object>> maps = new ArrayList<>();
         for (int i = 0; i < persons.length; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -46,5 +57,4 @@ public class PersonBean implements PersonService {
         }
         return maps;
     }
-
 }

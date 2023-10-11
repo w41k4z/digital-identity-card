@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="digital-health" basedir=".">
+<project name="digital-property" basedir=".">
     
     <!-- PROPERTIES -->
-    <property name="app.name" value="digital-health"/>
+    <property name="app.name" value="digital-property"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="src.dir" value="${basedir}/src"/>
     <property name="lib.dir" value="${basedir}/lib"/>
