@@ -4,7 +4,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import api.IndexAPI;
+import api.PersonServiceAPI;
 
 @ApplicationPath("/api")
 public class DigitalHealth extends Application {
@@ -12,7 +12,7 @@ public class DigitalHealth extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add(IndexAPI.class);
+        classes.add(PersonServiceAPI.class);
         return classes;
     }
 }

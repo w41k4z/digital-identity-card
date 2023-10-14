@@ -31,30 +31,18 @@ public class PersonBean implements PersonService {
     }
 
     @Override
-    public Map<String, Object> fetchByID(String ID) throws Exception {
+    public service.dto.PersonDTO fetchByID(String ID) throws Exception {
         Person person = this.person.findByPrimaryKey(new DBAccess(), ID);
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("nic", person.getNationalIdentityCard());
-        map.put("name", person.getName());
-        map.put("firstName", person.getFirstName());
-        map.put("address", person.getAddress());
-        map.put("phone", person.getPhoneNumber());
-        return map;
+        return person == null ? null : person.toDTO();
     }
 
     @Override
-    public List<Map<String, Object>> fetch() throws Exception {
+    public service.dto.PersonDTO[] fetch() throws Exception {
         Person[] persons = this.person.findAll(new DBAccess());
-        List<Map<String, Object>> maps = new ArrayList<>();
+        service.dto.PersonDTO[] personDTOs = new service.dto.PersonDTO[persons.length];
         for (int i = 0; i < persons.length; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("nic", persons[i].getNationalIdentityCard());
-            map.put("name", persons[i].getName());
-            map.put("firstName", persons[i].getFirstName());
-            map.put("address", persons[i].getAddress());
-            map.put("phone", persons[i].getPhoneNumber());
-            maps.add(map);
+            personDTOs[i] = persons[i].toDTO();
         }
-        return maps;
+        return personDTOs;
     }
 }

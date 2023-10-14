@@ -68,4 +68,9 @@ public class Person extends Relation<Person> {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    /* METHOD */
+    public service.dto.PersonDTO toDTO() {
+        return new service.dto.PersonDTO(nationalIdentityCard, name, firstName, address, phoneNumber);
+    }
 }
