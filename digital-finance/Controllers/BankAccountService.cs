@@ -52,7 +52,7 @@ public class BankAccountController : ControllerBase
     }
 
     // METHODS
-    public static async void checkingNICAvailability(string nic)
+    public static async Task<bool> checkingNICAvailability(string nic)
     {
         using (HttpClient client = new HttpClient())
         {
@@ -68,13 +68,13 @@ public class BankAccountController : ControllerBase
                 string data = await response.Content.ReadAsStringAsync();
                 if (data != "null")
                 {
-                    return;
+                    return true;
                 }
-                throw new Exception("This national identity card is not registered yet");
+                return false;
             }
             else
             {
-                throw new Exception("Error: Check the URI or the server web service");
+                return false;
             }
         }
     }

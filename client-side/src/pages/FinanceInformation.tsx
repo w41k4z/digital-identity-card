@@ -4,12 +4,16 @@ import * as Si from "react-icons/si";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SidePanel from "../components/panel/SidePanel";
+import axios from "../http-client-side/Axios";
 
 import BankAccount from "../interfaces/BankAccount";
 import BankTransaction from "../interfaces/BankTransaction";
 
 const FinanceInformation = () => {
   /* HOOKS */
+  const [destination, setDestination] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [currency, setCurrency] = useState("AR");
   const { nic } = useParams();
   const [bankAccount, setBankAccount] = useState({} as BankAccount);
   const [bankTransaction, setBankTransaction] = useState([]);
@@ -51,13 +55,31 @@ const FinanceInformation = () => {
       onItemClick: () => {},
     },
     {
-      title: "Contract",
+      title: "Property",
       type: "nav-item",
       path: `/property/${nic}`,
       icon: <FlatColor.FcApproval />,
       onItemClick: () => {},
     },
   ];
+
+  const onTransfer = async () => {
+    if (nic) {
+      await axios
+        .get(
+          `http://localhost:5205/api/bank-transactions/transfer/${nic}/${amount}/${currency}/${destination}`
+        )
+        .then((res) => {
+          alert("Ok");
+        })
+        .catch((value) => {
+          console.log(value.response);
+          alert(
+            value.response && value.response.data ? value.response.data : value
+          );
+        });
+    }
+  };
 
   return (
     <div className="d-flex justify-content-between">
@@ -69,6 +91,38 @@ const FinanceInformation = () => {
       <section className="mt-5 d-flex flex-column align-items-center w-100">
         <div className="card border-0">
           <div className="card-body">
+            <div className="mb-5 d-flex justify-content-end align-items-center">
+              <p className="m-0">
+                Transfer to :{" "}
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                  }}
+                  placeholder="xxxxxxxxxxx"
+                />{" "}
+                <input
+                  className="me-2"
+                  type="number"
+                  onChange={(e) => {
+                    setAmount(parseFloat(e.target.value));
+                  }}
+                />
+                <select
+                  className="me-2"
+                  onChange={(e) => {
+                    setCurrency(e.target.value);
+                  }}
+                >
+                  <option value="AR">AR</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                </select>
+              </p>
+              <button className="btn btn-primary" onClick={onTransfer}>
+                Transfer
+              </button>
+            </div>
             {bankAccount.nic && (
               <div className="basic-info shadow-sm p-3">
                 <h3 className="text-start">

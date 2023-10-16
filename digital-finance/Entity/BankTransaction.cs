@@ -80,4 +80,27 @@ public class BankTransaction
 
         return transactions;
     }
+
+    public static double GetSold(string nic)
+    {
+        double sold = 0;
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "SELECT SUM(amount) FROM bank_transaction WHERE account_id = @AccountId";
+            using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@AccountId", nic);
+                object result = command.ExecuteScalar();
+                if (result != DBNull.Value)
+                {
+                    sold = Convert.ToDouble(result);
+                }
+            }
+        }
+
+        return sold;
+    }
+
 }

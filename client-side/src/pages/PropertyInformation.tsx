@@ -46,7 +46,7 @@ const PropertyInformation = () => {
       onItemClick: () => {},
     },
     {
-      title: "Contract",
+      title: "Property",
       type: "nav-item",
       path: `/property/${nic}`,
       icon: <FlatColor.FcApproval />,
@@ -64,7 +64,7 @@ const PropertyInformation = () => {
       <section className="mt-5 d-flex flex-column align-items-center w-100">
         <div className="card border-0">
           <div className="card-body">
-            {properties && (
+            {properties && properties.length > 1 && (
               <div className="basic-info shadow-sm p-3">
                 <h3 className="text-start">
                   <b>Properties :</b>
@@ -91,7 +91,7 @@ const PropertyInformation = () => {
                 </table>
               </div>
             )}
-            {!properties && (
+            {(!properties || properties.length === 0) && (
               <h1 className="text-danger fw-bolder">
                 This person do not have any property yet
               </h1>
