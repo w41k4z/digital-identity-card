@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "digital-finance/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNet.Cors": "5.2.9",
           "Microsoft.AspNetCore.OpenApi": "7.0.11",
           "Newtonsoft.Json": "13.0.3",
           "Npgsql": "7.0.6",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "digital-finance.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Cors/5.2.9": {
+        "runtime": {
+          "lib/net45/System.Web.Cors.dll": {
+            "assemblyVersion": "5.2.9.0",
+            "fileVersion": "5.2.61129.10"
+          }
         }
       },
       "Microsoft.AspNetCore.OpenApi/7.0.11": {
@@ -495,6 +504,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.AspNet.Cors/5.2.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LUjfvaOu0q9bz523CYmIE06Q9EttrpKuRLm3T83spF6oX+dYiFlLJFLm4RveGKq/puRJC5KTnXdbWGLqM783jA==",
+      "path": "microsoft.aspnet.cors/5.2.9",
+      "hashPath": "microsoft.aspnet.cors.5.2.9.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/7.0.11": {
       "type": "package",

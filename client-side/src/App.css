@@ -1,0 +1,7 @@
+.borderless-bottom-input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
+  box-shadow: none;
+}

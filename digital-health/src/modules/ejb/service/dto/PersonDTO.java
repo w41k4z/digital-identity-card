@@ -9,13 +9,15 @@ public class PersonDTO implements Serializable {
     public String firstName;
     public String address;
     public String phoneNumber;
+    public String bloodType;
 
     /* CONSTRUCTOR */
-    public PersonDTO(String nic, String name, String firstName, String address, String number) {
+    public PersonDTO(String nic, String name, String firstName, String address, String number, String bloodType) {
         this.nationalIdentityCard = nic;
         this.name = name;
         this.firstName = firstName;
         this.address = address;
         this.phoneNumber = number;
+        this.bloodType = bloodType;
     }
 }

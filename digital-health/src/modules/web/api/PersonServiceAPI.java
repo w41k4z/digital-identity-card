@@ -33,11 +33,4 @@ public class PersonServiceAPI {
         PersonService personService = (PersonService) remoteAccess.getRemoteReference(PersonService.class);
         return new Gson().toJson(personService.fetchByID(nic));
     }
-
-    @GET
-    @Path("/test")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String test() throws Exception {
-        return "OK";
-    }
 }

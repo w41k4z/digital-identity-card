@@ -64,6 +64,9 @@
         <jar jarfile="${dist.dir}/${app.name}-client-service.jar" >
             <fileset dir="client" />
         </jar>
+        <copy todir="${lib.dir}">
+            <file name="${dist.dir}/${app.name}-client-service.jar" />
+        </copy>
         
         <delete dir="client"/>
         <delete dir="ejb"/>

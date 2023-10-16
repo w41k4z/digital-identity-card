@@ -22,6 +22,7 @@ public class BankAccountController : ControllerBase
     [HttpGet("{nic}")]
     public BankAccount Get(string nic)
     {
+
         BankAccountController.checkingNICAvailability(nic);
         return BankAccount.ReadAccount(nic);
     }

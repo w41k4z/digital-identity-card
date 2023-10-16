@@ -1,0 +1,5 @@
+INSERT INTO bank_account VALUES
+('101241216174', '2023-10-15');
+
+INSERT INTO bank_transaction VALUES
+(DEFAULT, '101241216174', 150000, '2023-10-15', 'Account Opening');

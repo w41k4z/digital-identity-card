@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Qys9yRXMTK3KdL5IqhgOlcV2KVVfmRIOOA/j044I1N216elTpaJkltkw3jpNTSYUFAbqD8We9PBDXbb7XC1H2g==",
+  "dgSpecHash": "M8jrMswMIq8qjqQl1O6uNDb8aHJ/TzjO0qNxnq6D8NBRKrXJILEqtC6tjk9dGETH5AeRomVnRKXfLMgdA2ifnQ==",
   "success": true,
-  "projectFilePath": "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/digital-finance.csproj",
+  "projectFilePath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
   "expectedPackageFiles": [
+    "/home/walker/.nuget/packages/microsoft.aspnet.cors/5.2.9/microsoft.aspnet.cors.5.2.9.nupkg.sha512",
     "/home/walker/.nuget/packages/microsoft.aspnetcore.openapi/7.0.11/microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
     "/home/walker/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/home/walker/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
@@ -64,5 +65,16 @@
     "/home/walker/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
     "/home/walker/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Cors 5.2.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Cors",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

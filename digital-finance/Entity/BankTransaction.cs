@@ -9,18 +9,18 @@ public class BankTransaction
 {
     /* FIELDS SECTION */
     public int TransactionId { get; set; }
-    public int AccountId { get; set; }
+    public string AccountId { get; set; }
     public decimal Amount { get; set; }
     public DateTime TransactionDate { get; set; }
     public string Description { get; set; }
 
     // Database connection string for PostgreSQL
-    private readonly string connectionString = "Host=localhost;Port=5432;Database=digital_finance;Username=w41k4z;Password=w41k4z!;";
+    private static readonly string connectionString = "Host=localhost;Port=5432;Database=digital_finance;Username=w41k4z;Password=w41k4z!;";
 
     /* CONSTRUCTORS SECTION */
     public BankTransaction() { }
 
-    public BankTransaction(int transactionId, int accountId, decimal amount, DateTime transactionDate, string description)
+    public BankTransaction(int transactionId, string accountId, decimal amount, DateTime transactionDate, string description)
     {
         TransactionId = transactionId;
         AccountId = accountId;
@@ -50,8 +50,10 @@ public class BankTransaction
     }
 
     // Read transactions for a specific account
-    public static DataTable GetTransactionsForAccount(int accountId, string connectionString)
+    public static List<BankTransaction> GetTransactionsForAccount(string accountId)
     {
+        List<BankTransaction> transactions = new List<BankTransaction>();
+
         using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
         {
             connection.Open();
@@ -59,13 +61,23 @@ public class BankTransaction
             using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@AccountId", accountId);
-                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
-                    DataTable transactions = new DataTable();
-                    adapter.Fill(transactions);
-                    return transactions;
+                    while (reader.Read())
+                    {
+                        transactions.Add(new BankTransaction
+                        {
+                            TransactionId = Convert.ToInt32(reader["transaction_id"]),
+                            AccountId = reader["account_id"].ToString(),
+                            Amount = Convert.ToDecimal(reader["amount"]),
+                            TransactionDate = Convert.ToDateTime(reader["transaction_date"]),
+                            Description = reader["description"].ToString()
+                        });
+                    }
                 }
             }
         }
+
+        return transactions;
     }
 }

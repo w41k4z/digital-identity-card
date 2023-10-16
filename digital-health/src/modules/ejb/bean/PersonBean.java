@@ -1,10 +1,5 @@
 package bean;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -23,11 +18,6 @@ public class PersonBean implements PersonService {
     /* CONSTRUCTOR */
     public PersonBean() throws Exception {
         this.person = new Person();
-    }
-
-    @Override
-    public boolean exists(String ID) throws Exception {
-        return false;
     }
 
     @Override

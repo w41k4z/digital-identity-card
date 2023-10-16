@@ -5,7 +5,7 @@ import orm.annotation.Entity;
 import orm.annotation.PrimaryKey;
 import orm.database.object.relation.Relation;
 
-@Entity(name = "person", columnCount = 5)
+@Entity(name = "person", columnCount = 6)
 public class Person extends Relation<Person> {
     /* FIELDS SECTION */
     @PrimaryKey(column = @Column(name = "nic"))
@@ -22,6 +22,9 @@ public class Person extends Relation<Person> {
 
     @Column(name = "phone")
     private String phoneNumber;
+
+    @Column(name = "blood_type")
+    private String bloodType;
 
     /* CONSTRUCTOR SECTION */
     public Person() throws Exception {
@@ -48,6 +51,10 @@ public class Person extends Relation<Person> {
         this.phoneNumber = phone;
     }
 
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
     /* GETTERS */
     public String getNationalIdentityCard() {
         return nationalIdentityCard;
@@ -69,8 +76,12 @@ public class Person extends Relation<Person> {
         return phoneNumber;
     }
 
+    public String getBloodType() {
+        return bloodType;
+    }
+
     /* METHOD */
     public service.dto.PersonDTO toDTO() {
-        return new service.dto.PersonDTO(nationalIdentityCard, name, firstName, address, phoneNumber);
+        return new service.dto.PersonDTO(nationalIdentityCard, name, firstName, address, phoneNumber, bloodType);
     }
 }

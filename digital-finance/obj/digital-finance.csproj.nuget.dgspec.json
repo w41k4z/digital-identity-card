@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/digital-finance.csproj": {}
+    "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj": {}
   },
   "projects": {
-    "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/digital-finance.csproj": {
+    "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/digital-finance.csproj",
+        "projectUniqueName": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
         "projectName": "digital-finance",
-        "projectPath": "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/digital-finance.csproj",
+        "projectPath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
         "packagesPath": "/home/walker/.nuget/packages/",
-        "outputPath": "/home/walker/Projects/MixProject/java-dotnet/digital-identity-card/digital-finance/obj/",
+        "outputPath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/walker/.nuget/NuGet/NuGet.Config"
@@ -38,6 +38,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNet.Cors": {
+              "target": "Package",
+              "version": "[5.2.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.11, )"
