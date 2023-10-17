@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Entity;
+using Client;
 
 [ApiController]
 [Route("api/bank-accounts")]
@@ -20,11 +21,24 @@ public class BankAccountController : ControllerBase
 
     // GET: api/bank-accounts/{nic}
     [HttpGet("{nic}")]
-    public BankAccount Get(string nic)
+    public async Task<ActionResult<BankAccount>> Get(string nic)
     {
-
-        BankAccountController.checkingNICAvailability(nic);
+        try
+        {
+            await Client.isValidNIC(nic);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
         return BankAccount.ReadAccount(nic);
+    }
+
+    // GET: api/bank-accounts
+    [HttpGet("{nic}/sold")]
+    public ActionResult<double> GetSold(string nic)
+    {
+        return BankTransaction.GetSold(nic);
     }
 
     // POST: api/bank-accounts
@@ -49,33 +63,5 @@ public class BankAccountController : ControllerBase
     {
         BankAccount.DeleteAccount(nic);
         return NoContent();
-    }
-
-    // METHODS
-    public static async Task<bool> checkingNICAvailability(string nic)
-    {
-        using (HttpClient client = new HttpClient())
-        {
-            // Set the base address of the web service
-            client.BaseAddress = new Uri("http://localhost:8080/digital-health/");
-
-            // Send a GET request to the specified endpoint
-            HttpResponseMessage response = await client.GetAsync("api/people/" + nic);
-
-            if (response.IsSuccessStatusCode)
-            {
-                // Parse and process the response content
-                string data = await response.Content.ReadAsStringAsync();
-                if (data != "null")
-                {
-                    return true;
-                }
-                return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

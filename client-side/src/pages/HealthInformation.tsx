@@ -255,7 +255,7 @@ const HealthInformation = () => {
                   </thead>
                   <tbody>
                     {healthDetail.map((detail: HealthDetail, index: number) => (
-                      <tr>
+                      <tr key={detail.ID}>
                         <td>{index + 1}</td>
                         <td>{detail.fromDate + ""}</td>
                         <td>{detail.category}</td>

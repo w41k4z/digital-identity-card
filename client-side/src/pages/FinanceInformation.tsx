@@ -15,15 +15,34 @@ const FinanceInformation = () => {
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState("AR");
   const { nic } = useParams();
+  const [sold, setSold] = useState(0);
   const [bankAccount, setBankAccount] = useState({} as BankAccount);
   const [bankTransaction, setBankTransaction] = useState([]);
   useEffect(() => {
     fetch(`http://localhost:5205/api/bank-accounts/${nic}`)
-      .then((res) => res.json().then((data) => setBankAccount(data)))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res);
+        res.json().then((data) => setBankAccount(data));
+      })
+      .catch((error) => {
+        alert(error);
+        console.log(error);
+      });
+    fetch(`http://localhost:5205/api/bank-accounts/${nic}/sold`)
+      .then((res) => {
+        console.log(res);
+        res.json().then((data) => setSold(data));
+      })
+      .catch((error) => {
+        alert(error);
+        console.log(error);
+      });
     fetch(`http://localhost:5205/api/bank-transactions/${nic}`)
       .then((res) => res.json().then((data) => setBankTransaction(data)))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        alert(error);
+        console.log(error);
+      });
   }, [nic]);
 
   /* ELEMENT */
@@ -65,12 +84,17 @@ const FinanceInformation = () => {
 
   const onTransfer = async () => {
     if (nic) {
+      const formData = new FormData();
+      formData.append("from", nic);
+      formData.append("to", destination);
+      formData.append("amount", amount + "");
+      formData.append("currency", currency);
       await axios
-        .get(
-          `http://localhost:5205/api/bank-transactions/transfer/${nic}/${amount}/${currency}/${destination}`
-        )
+        .post("http://localhost:5205/api/bank-transactions/transfer", formData)
         .then((res) => {
           alert("Ok");
+          setDestination("");
+          setAmount(0);
         })
         .catch((value) => {
           console.log(value.response);
@@ -99,11 +123,13 @@ const FinanceInformation = () => {
                   onChange={(e) => {
                     setDestination(e.target.value);
                   }}
+                  defaultValue={destination}
                   placeholder="xxxxxxxxxxx"
                 />{" "}
                 <input
                   className="me-2"
                   type="number"
+                  defaultValue={amount}
                   onChange={(e) => {
                     setAmount(parseFloat(e.target.value));
                   }}
@@ -150,6 +176,9 @@ const FinanceInformation = () => {
                     )}
                   </tbody>
                 </table>
+                <h1 className="mt-5 text-end">
+                  Sold : <span className="text-success">{sold}</span>
+                </h1>
               </div>
             )}
             {!bankAccount.nic && (

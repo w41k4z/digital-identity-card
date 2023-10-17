@@ -6,49 +6,50 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Entity;
+using Client;
+using Model;
 
 [ApiController]
 [Route("api/bank-transactions")]
 public class BankTransactionController : ControllerBase
 {
-
     [HttpGet("{nic}")]
     public async Task<ActionResult<List<BankTransaction>>> Get(string nic)
     {
-        if (await BankAccountController.checkingNICAvailability(nic))
+        if (await Client.isValidNIC(nic))
         {
             return BankTransaction.GetTransactionsForAccount(nic);
         }
         return BadRequest("No bank account");
     }
 
-    [HttpGet("transfer/{from}/{amount}/{currency}/{to}")]
-    public async Task<ActionResult<Transfer>> Get(string from, string amount, string currency, string to)
+    [HttpPost("transfer")]
+    public async Task<IActionResult> Get([FromBody] Transaction transaction)
     {
         try
         {
-            if (from == to)
+            if (transaction.from == transaction.to)
             {
                 throw new Exception("You can not transfer money to yourself");
             }
 
-            bool s = await BankAccountController.checkingNICAvailability(from);
-            bool r = await BankAccountController.checkingNICAvailability(to);
-            if (s && r)
+            bool isSenderValid = await Client.isValidNIC(transaction.from);
+            bool isReceiverValid = await Client.isValidNIC(transaction.to);
+            if (isSenderValid && isReceiverValid)
             {
-                var Amount = decimal.Parse(amount);
-                decimal res = await Transfer.getConversion(currency, (double)Amount);
-                Amount = res;
+                var Amount = decimal.Parse(transaction.amount);
+                decimal converted = await Client.getCurrencyConversion(transaction.currency, (double)Amount);
+                Amount = converted;
 
-                double senderSold = BankTransaction.GetSold(from);
+                double senderSold = BankTransaction.GetSold(transaction.from);
                 if (senderSold < (double)Amount)
                 {
                     throw new Exception("Insufficient funds. Sold = " + senderSold);
                 }
 
-                BankTransaction sender = new BankTransaction(-1, from, (Amount * -1), DateTime.Now, "Transfer " + Amount + " to " + to);
+                BankTransaction sender = new BankTransaction(-1, transaction.from, (Amount * -1), DateTime.Now, "Transfer " + transaction.amount + " " + transaction.currency + " to " + transaction.to);
                 sender.CreateTransaction();
-                BankTransaction receiver = new BankTransaction(-1, to, Amount, DateTime.Now, "Transfered " + Amount + " from " + from);
+                BankTransaction receiver = new BankTransaction(-1, transaction.to, Amount, DateTime.Now, "Transfered " + transaction.amount + " " + transaction.currency + " from " + transaction.from);
                 receiver.CreateTransaction();
                 return Ok("OK");
             }
