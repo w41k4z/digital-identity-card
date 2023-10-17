@@ -3,4 +3,4 @@ INSERT INTO bank_account VALUES
 ('101241216123', '2023-10-16');
 
 INSERT INTO bank_transaction VALUES
-(DEFAULT, '101241216174', 150000, '2023-10-15', 'Account Opening');
+(DEFAULT, '101241216174', 90000, '2023-10-15', 'Account Opening');

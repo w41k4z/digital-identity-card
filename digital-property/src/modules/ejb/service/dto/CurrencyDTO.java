@@ -7,13 +7,15 @@ public class CurrencyDTO {
     public Integer ID;
     public String currency;
     public Timestamp fromDate;
-    public Double value;
+    public Double purchaseRate;
+    public Double saleRate;
 
     /* CONSTRUCTOR */
-    public CurrencyDTO(Integer Id, String currency, Timestamp fromDate, Double value) {
+    public CurrencyDTO(Integer Id, String currency, Timestamp fromDate, Double purchaseRate, Double saleRate) {
         this.ID = Id;
         this.currency = currency;
         this.fromDate = fromDate;
-        this.value = value;
+        this.purchaseRate = purchaseRate;
+        this.saleRate = saleRate;
     }
 }

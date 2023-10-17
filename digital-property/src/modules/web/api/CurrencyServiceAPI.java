@@ -14,13 +14,24 @@ import service.CurrencyService;
 @Path("/currencies")
 public class CurrencyServiceAPI {
     @GET
-    @Path("/{currency}/{value}")
+    @Path("/purchase-rate/{currency}/{value}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getLatestConversion(@PathParam("currency") String currency, @PathParam("value") Double value)
+    public String getLatestPurchaseConversion(@PathParam("currency") String currency, @PathParam("value") Double value)
             throws Exception {
         RemoteAccess remoteAccess = new RemoteAccess("localhost", "3700",
                 "java:global/digital-property/ejb-module/");
         CurrencyService currencyService = (CurrencyService) remoteAccess.getRemoteReference(CurrencyService.class);
-        return new Gson().toJson(currencyService.getLatestConversion(currency, value));
+        return new Gson().toJson(currencyService.getLatestPurchaseConversion(currency, value));
+    }
+
+    @GET
+    @Path("/sale-rate/{currency}/{value}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getLatestSaleConversion(@PathParam("currency") String currency, @PathParam("value") Double value)
+            throws Exception {
+        RemoteAccess remoteAccess = new RemoteAccess("localhost", "3700",
+                "java:global/digital-property/ejb-module/");
+        CurrencyService currencyService = (CurrencyService) remoteAccess.getRemoteReference(CurrencyService.class);
+        return new Gson().toJson(currencyService.getLatestSaleConversion(currency, value));
     }
 }

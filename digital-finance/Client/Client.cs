@@ -27,13 +27,38 @@ public class Client
         }
     }
 
-    public static async Task<decimal> getCurrencyConversion(string cur, double amount)
+    public static async Task<decimal> getPurchaseRateCurrencyConversion(string cur, double amount)
     {
         using (HttpClient client = new HttpClient())
         {
             client.BaseAddress = new Uri("http://localhost:8080/digital-property/");
 
-            HttpResponseMessage response = await client.GetAsync("api/currencies/" + cur + "/" + amount);
+            HttpResponseMessage response = await client.GetAsync("api/currencies/purchase-rate/" + cur + "/" + amount);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Parse and process the response content
+                string data = await response.Content.ReadAsStringAsync();
+                if (data != null || data != "null")
+                {
+                    return decimal.Parse(data);
+                }
+                throw new Exception("This national identity card is not registered yet");
+            }
+            else
+            {
+                throw new Exception("Error: Check the URI or the server web service");
+            }
+        }
+    }
+
+    public static async Task<decimal> getSaleRateCurrencyConversion(string cur, double amount)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("http://localhost:8080/digital-property/");
+
+            HttpResponseMessage response = await client.GetAsync("api/currencies/sale-rate/" + cur + "/" + amount);
 
             if (response.IsSuccessStatusCode)
             {

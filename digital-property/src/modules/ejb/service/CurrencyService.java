@@ -1,5 +1,7 @@
 package service;
 
 public interface CurrencyService {
-    public double getLatestConversion(String currency, double value) throws Exception;
+    public double getLatestPurchaseConversion(String currency, double value) throws Exception;
+
+    public double getLatestSaleConversion(String currency, double value) throws Exception;
 }

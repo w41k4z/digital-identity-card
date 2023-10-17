@@ -13,5 +13,6 @@ CREATE TABLE currency (
     id SERIAL PRIMARY KEY,
     currency VARCHAR(3) NOT NULL CHECK (currency IN ('AR', 'USD', 'EUR')),
     from_date TIMESTAMP NOT NULL,
-    value DECIMAL(10, 2)
+    purchase_rate DECIMAL(10, 2),
+    sale_rate DECIMAL(10, 2)
 );

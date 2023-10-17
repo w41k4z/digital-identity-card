@@ -11,8 +11,13 @@ import service.CurrencyService;
 public class CurrencyBean implements CurrencyService {
 
     @Override
-    public double getLatestConversion(String currency, double value) throws Exception {
-        return Currency.getLatestConversion(currency, value);
+    public double getLatestPurchaseConversion(String currency, double value) throws Exception {
+        return Currency.getLatestPurchaseConversion(currency, value);
+    }
+
+    @Override
+    public double getLatestSaleConversion(String currency, double value) throws Exception {
+        return Currency.getLatestSaleConversion(currency, value);
     }
 
 }

@@ -37,19 +37,26 @@ public class BankTransactionController : ControllerBase
             bool isReceiverValid = await Client.isValidNIC(transaction.to);
             if (isSenderValid && isReceiverValid)
             {
-                var Amount = decimal.Parse(transaction.amount);
-                decimal converted = await Client.getCurrencyConversion(transaction.currency, (double)Amount);
-                Amount = converted;
+                var PurchaseAmount = decimal.Parse(transaction.amount);
+                var SaleAmount = decimal.Parse(transaction.amount);
+                decimal purchaseRateconverted = await Client.getPurchaseRateCurrencyConversion(transaction.currency, (double)PurchaseAmount);
+                decimal saleRateconverted = await Client.getSaleRateCurrencyConversion(transaction.currency, (double)SaleAmount);
+                PurchaseAmount = purchaseRateconverted;
+                SaleAmount = saleRateconverted;
 
                 double senderSold = BankTransaction.GetSold(transaction.from);
-                if (senderSold < (double)Amount)
+                if ((double)PurchaseAmount < 0)
+                {
+                    throw new Exception("Are you okey ? You can not do that");
+                }
+                if (senderSold < (double)PurchaseAmount)
                 {
                     throw new Exception("Insufficient funds. Sold = " + senderSold);
                 }
 
-                BankTransaction sender = new BankTransaction(-1, transaction.from, (Amount * -1), DateTime.Now, "Transfer " + transaction.amount + " " + transaction.currency + " to " + transaction.to);
+                BankTransaction sender = new BankTransaction(-1, transaction.from, (PurchaseAmount * -1), DateTime.Now, "Transfer " + transaction.amount + " " + transaction.currency + " to " + transaction.to);
                 sender.CreateTransaction();
-                BankTransaction receiver = new BankTransaction(-1, transaction.to, Amount, DateTime.Now, "Transfered " + transaction.amount + " " + transaction.currency + " from " + transaction.from);
+                BankTransaction receiver = new BankTransaction(-1, transaction.to, SaleAmount, DateTime.Now, "Transfered " + transaction.amount + " " + transaction.currency + " from " + transaction.from);
                 receiver.CreateTransaction();
                 return Ok("OK");
             }

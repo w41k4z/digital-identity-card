@@ -9,7 +9,7 @@ import orm.annotation.Column;
 import orm.database.object.relation.Relation;
 import service.dto.CurrencyDTO;
 
-@Entity(name = "currency", columnCount = 4)
+@Entity(name = "currency", columnCount = 5)
 public class Currency extends Relation<Currency> {
     /* FIELDS SECTION */
     @PrimaryKey(column = @Column(name = "id"))
@@ -21,8 +21,11 @@ public class Currency extends Relation<Currency> {
     @Column(name = "from_date")
     private Timestamp fromDate;
 
-    @Column
-    private Double value;
+    @Column(name = "purchase_rate")
+    private Double purchaseRate;
+
+    @Column(name = "sale_rate")
+    private Double saleRate;
 
     /* CONSTRUCTOR */
     public Currency() throws Exception {
@@ -74,25 +77,45 @@ public class Currency extends Relation<Currency> {
     /**
      * @return Double return the value
      */
-    public Double getValue() {
-        return value;
+    public Double getPurchaseRate() {
+        return purchaseRate;
     }
 
     /**
      * @param value the value to set
      */
-    public void setValue(Double value) {
-        this.value = value;
+    public void setPurchaseRate(Double value) {
+        this.purchaseRate = value;
+    }
+
+    /**
+     * @return Double return the value
+     */
+    public Double getSaleRate() {
+        return saleRate;
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setSaleRate(Double value) {
+        this.saleRate = value;
     }
 
     /* METHOD */
-    public static double getLatestConversion(String currency, double value) throws Exception {
+    public static double getLatestPurchaseConversion(String currency, double value) throws Exception {
         Currency latestConversion = new Currency().findAll(new DBAccess(),
                 "WHERE currency = '" + currency + "' ORDER BY from_date DESC")[0];
-        return value * latestConversion.getValue();
+        return value * latestConversion.getPurchaseRate();
+    }
+
+    public static double getLatestSaleConversion(String currency, double value) throws Exception {
+        Currency latestConversion = new Currency().findAll(new DBAccess(),
+                "WHERE currency = '" + currency + "' ORDER BY from_date DESC")[0];
+        return value * latestConversion.getSaleRate();
     }
 
     public CurrencyDTO toDTO() {
-        return new CurrencyDTO(ID, currency, fromDate, value);
+        return new CurrencyDTO(ID, currency, fromDate, purchaseRate, saleRate);
     }
 }
