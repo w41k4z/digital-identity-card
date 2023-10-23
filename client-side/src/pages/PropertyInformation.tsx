@@ -1,3 +1,4 @@
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import * as FlatColor from "react-icons/fc";
 import * as Ri from "react-icons/ri";
 import * as Si from "react-icons/si";
@@ -6,6 +7,9 @@ import { useParams } from "react-router-dom";
 import SidePanel from "../components/panel/SidePanel";
 
 import Property from "../interfaces/Property";
+
+import "leaflet/dist/leaflet.css";
+import "../assets/css/leaflet-map.css";
 
 const PropertyInformation = () => {
   /* HOOKS */
@@ -96,6 +100,20 @@ const PropertyInformation = () => {
                 This person do not have any property yet
               </h1>
             )}
+            <MapContainer
+              className="mt-5"
+              center={[-20.348404, 47.654323]}
+              zoom={5}
+              scrollWheelZoom={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={[-20.348404, 47.654323]}>
+                <Popup>This is Madagascar</Popup>
+              </Marker>
+            </MapContainer>
           </div>
         </div>
       </section>
