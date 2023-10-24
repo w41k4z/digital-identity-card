@@ -1,4 +1,14 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Polygon,
+  Polyline,
+  Popup,
+  Rectangle,
+  TileLayer,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 import * as FlatColor from "react-icons/fc";
 import * as Ri from "react-icons/ri";
 import * as Si from "react-icons/si";
@@ -10,6 +20,32 @@ import Property from "../interfaces/Property";
 
 import "leaflet/dist/leaflet.css";
 import "../assets/css/leaflet-map.css";
+import { LatLng, LatLngBoundsExpression, LatLngExpression } from "leaflet";
+
+function LocationMarker() {
+  const [position, setPosition] = useState<LatLng>({
+    lat: 180,
+    lng: -180,
+  } as LatLng);
+  const map = useMapEvents({
+    click(e) {
+      alert(e.latlng);
+      // map.locate();
+    },
+    locationfound(e) {
+      // alert(e.latlng);
+      setPosition(e.latlng);
+      // map.flyTo(e.latlng, map.getZoom());
+    },
+  });
+  const theMap = useMap();
+
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  );
+}
 
 const PropertyInformation = () => {
   /* HOOKS */
@@ -57,6 +93,40 @@ const PropertyInformation = () => {
       onItemClick: () => {},
     },
   ];
+
+  // const polyline: LatLngExpression[] = [
+  //   [-21.348404, 46.654323],
+  //   [-21.448404, 46.754323],
+  //   [-21.248404, 46.554323],
+  // ];
+  // const multiPolyline: LatLngExpression[][] = [
+  //   [
+  //     [-19.448404, 48.754323],
+  //     [-18.448404, 48.654323],
+  //     [-17.948404, 48.754323],
+  //   ],
+  //   [
+  //     [-19.148404, 48.254323],
+  //     [-18.748404, 47.354323],
+  //     [-19.548404, 47.754323],
+  //   ],
+  // ];
+  // const polygon: LatLngExpression[] = [
+  //   [-19.548404, 48.654323],
+  //   [-21.448404, 46.754323],
+  //   [-20.448404, 49.154323],
+  // ];
+
+  // const rectangle: LatLngBoundsExpression = [
+  //   [-19.448404, 48.754323],
+  //   [-18.448404, 47.754323],
+  // ];
+
+  // const fillBlueOptions = { fillColor: "blue" };
+  // const blackOptions = { color: "black" };
+  // const limeOptions = { color: "lime" };
+  // const purpleOptions = { color: "purple" };
+  // const redOptions = { color: "red" };
 
   return (
     <div className="d-flex justify-content-between">
@@ -110,9 +180,15 @@ const PropertyInformation = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker position={[-20.348404, 47.654323]}>
+              {/* <Marker position={[-20.348404, 47.654323]}>
                 <Popup>This is Madagascar</Popup>
-              </Marker>
+              </Marker> */}
+              <LocationMarker />
+
+              {/* <Polyline pathOptions={limeOptions} positions={polyline} />
+              <Polyline pathOptions={limeOptions} positions={multiPolyline} />
+              <Polygon pathOptions={purpleOptions} positions={polygon} />
+              <Rectangle bounds={rectangle} pathOptions={blackOptions} /> */}
             </MapContainer>
           </div>
         </div>
