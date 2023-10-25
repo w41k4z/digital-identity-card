@@ -3,6 +3,5 @@ INSERT INTO property VALUES
 
 INSERT INTO currency VALUES
 (DEFAULT, 'AR', current_timestamp, 1., 1.),
-INSERT INTO currency VALUES
 (DEFAULT, 'USD', current_timestamp, 4930, 4450),
 (DEFAULT, 'EUR', current_timestamp, 5150, 4890);

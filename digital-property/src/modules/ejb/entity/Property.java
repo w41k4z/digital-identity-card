@@ -6,6 +6,7 @@ import orm.annotation.Column;
 import orm.annotation.Entity;
 import orm.annotation.PrimaryKey;
 import orm.database.object.relation.Relation;
+import orm.database.object.type.Polygon;
 
 @Entity(name = "property", columnCount = 5)
 public class Property extends Relation<Property> {
@@ -20,10 +21,10 @@ public class Property extends Relation<Property> {
     private Date acquisitionDate;
 
     @Column
-    private String name;
+    private String description;
 
     @Column
-    private String description;
+    private Polygon polygon;
 
     /* CONSTRUCTOR */
     public Property() throws Exception {
@@ -56,12 +57,12 @@ public class Property extends Relation<Property> {
         this.acquisitionDate = acquisitionDate;
     }
 
-    public String getName() {
-        return name;
+    public Polygon getPolygon() {
+        return polygon;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPolygon(Polygon polygon) {
+        this.polygon = polygon;
     }
 
     public String getDescription() {

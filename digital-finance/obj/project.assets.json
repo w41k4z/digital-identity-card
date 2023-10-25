@@ -3520,11 +3520,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
+      "projectUniqueName": "/home/walker/Projects/MixProject/dotnet-java-react/digital-identity-card/digital-finance/digital-finance.csproj",
       "projectName": "digital-finance",
-      "projectPath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
+      "projectPath": "/home/walker/Projects/MixProject/dotnet-java-react/digital-identity-card/digital-finance/digital-finance.csproj",
       "packagesPath": "/home/walker/.nuget/packages/",
-      "outputPath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/obj/",
+      "outputPath": "/home/walker/Projects/MixProject/dotnet-java-react/digital-identity-card/digital-finance/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/walker/.nuget/NuGet/NuGet.Config"
@@ -3595,7 +3595,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/walker/.dotnet/sdk/7.0.401/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/226/sdk/7.0.403/RuntimeIdentifierGraph.json"
       }
     }
   },

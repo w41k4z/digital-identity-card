@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "M8jrMswMIq8qjqQl1O6uNDb8aHJ/TzjO0qNxnq6D8NBRKrXJILEqtC6tjk9dGETH5AeRomVnRKXfLMgdA2ifnQ==",
+  "dgSpecHash": "VLcSlfIGheDCgBLKB3fdNen/H5kTB/8ei2ESYfyeLoKEu6D4sOZV7f6tJryQyPx5E+KNYyn3bJzIOYewuGYvtA==",
   "success": true,
-  "projectFilePath": "/home/walker/Projects/MixProject/java-dotnet-react/digital-identity-card/digital-finance/digital-finance.csproj",
+  "projectFilePath": "/home/walker/Projects/MixProject/dotnet-java-react/digital-identity-card/digital-finance/digital-finance.csproj",
   "expectedPackageFiles": [
     "/home/walker/.nuget/packages/microsoft.aspnet.cors/5.2.9/microsoft.aspnet.cors.5.2.9.nupkg.sha512",
     "/home/walker/.nuget/packages/microsoft.aspnetcore.openapi/7.0.11/microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
