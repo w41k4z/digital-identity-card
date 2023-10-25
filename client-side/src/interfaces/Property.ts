@@ -2,6 +2,9 @@ export default interface Property {
   ID: string;
   personNationalIdentityCard: string;
   acquisitionDate: Date;
-  name: string;
   description: string;
+  polygon: {
+    longitude: number;
+    latitude: number;
+  }[];
 }

@@ -6,7 +6,7 @@ CREATE TABLE property (
     person_nic CHAR(12) NOT NULL,
     aquisition_date DATE NOT NULL,
     description VARCHAR(255) NOT NULL,
-    polygon GEOMETRY(POLYGON, 4326) NOT NULL
+    polygon GEOMETRY(POLYGON) NOT NULL
 );
 
 CREATE TABLE currency (

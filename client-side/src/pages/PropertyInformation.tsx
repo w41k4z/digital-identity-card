@@ -53,7 +53,12 @@ const PropertyInformation = () => {
   const [properties, setProperties] = useState([]);
   useEffect(() => {
     fetch(`http://localhost:8080/digital-property/api/properties/${nic}`)
-      .then((res) => res.json().then((data) => setProperties(data)))
+      .then((res) =>
+        res.json().then((data) => {
+          alert(data);
+          setProperties(data);
+        })
+      )
       .catch((error) => console.log(error));
   }, [nic]);
 
@@ -148,7 +153,6 @@ const PropertyInformation = () => {
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Acquisition date</th>
-                      <th scope="col">Name</th>
                       <th scope="col">Description</th>
                     </tr>
                   </thead>
@@ -157,7 +161,6 @@ const PropertyInformation = () => {
                       <tr key={property.ID}>
                         <th>{index + 1}</th>
                         <th>{property.acquisitionDate + ""}</th>
-                        <td>{property.name}</td>
                         <td>{property.description}</td>
                       </tr>
                     ))}

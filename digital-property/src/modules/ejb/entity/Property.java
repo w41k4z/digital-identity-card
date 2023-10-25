@@ -29,7 +29,6 @@ public class Property extends Relation<Property> {
     /* CONSTRUCTOR */
     public Property() throws Exception {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /* GETTERS AND SETTERS */
@@ -75,7 +74,7 @@ public class Property extends Relation<Property> {
 
     /* METHOD */
     public service.dto.PropertyDTO toDTO() {
-        return new service.dto.PropertyDTO(this.ID, this.personNationalIdentityCard, this.acquisitionDate, this.name,
-                this.description);
+        return new service.dto.PropertyDTO(this.ID, this.personNationalIdentityCard, this.acquisitionDate,
+                this.description, this.polygon);
     }
 }
